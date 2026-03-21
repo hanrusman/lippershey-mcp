@@ -1,0 +1,25 @@
+services:
+  lippershey-mcp:
+    build: .
+    container_name: lippershey-mcp
+    restart: unless-stopped
+    ports:
+      - "8420:8000"
+    volumes:
+      - lippershey-data:/data
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - LIPPERSHEY_DB=/data/lippershey.db
+      - LIPPERSHEY_CONFIG=/app/config.yaml
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 256m
+    cpus: 0.5
+
+volumes:
+  lippershey-data:

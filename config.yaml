@@ -1,0 +1,289 @@
+default_preferences:
+  time_budget: 20
+  weekday:
+    max_articles: 15
+    lookback_hours: 24
+  weekend:
+    max_articles: 20
+    lookback_hours: 168  # 7 days
+
+categories:
+  ai_ml:
+    priority: 10
+    keywords:
+      - llm
+      - language model
+      - gpt
+      - claude
+      - gemini
+      - openai
+      - anthropic
+      - transformer
+      - machine learning
+      - deep learning
+      - neural network
+      - reinforcement learning
+      - agents
+      - rag
+      - fine-tuning
+      - embeddings
+      - inference
+      - benchmark
+      - multimodal
+      - reasoning
+  product_ux:
+    priority: 8
+    keywords:
+      - product management
+      - product strategy
+      - user research
+      - ux design
+      - design thinking
+      - jobs to be done
+      - continuous discovery
+      - roadmap
+      - okr
+      - discovery
+      - retention
+      - engagement
+      - conversion
+      - onboarding
+      - metrics
+  cycling:
+    priority: 8
+    keywords:
+      - cycling
+      - wielrennen
+      - koers
+      - tour de france
+      - giro
+      - vuelta
+      - classics
+      - strava
+      - watt
+      - peloton
+      - wielrenner
+      - etappe
+      - tijdrit
+      - climber
+  tech_startups:
+    priority: 7
+    keywords:
+      - startup
+      - venture capital
+      - funding
+      - series a
+      - ipo
+      - saas
+      - platform
+      - cloud
+      - api
+      - developer tools
+      - open source
+      - software engineering
+      - architecture
+      - scalability
+  nl_news:
+    priority: 6
+    keywords:
+      - nederland
+      - dutch
+      - amsterdam
+      - politiek
+      - overheid
+      - privacy
+      - digitalisering
+      - technologie
+      - onderwijs
+  science:
+    priority: 5
+    keywords:
+      - research
+      - study
+      - discovery
+      - experiment
+      - biology
+      - physics
+      - chemistry
+      - astronomy
+      - genetics
+      - neuroscience
+      - wetenschap
+  climate:
+    priority: 5
+    keywords:
+      - climate change
+      - carbon
+      - emissions
+      - renewable energy
+      - solar
+      - wind energy
+      - net zero
+      - sustainability
+      - global warming
+      - fossil fuels
+      - energy transition
+
+feeds:
+  # AI & ML
+  - url: https://stratechery.com/feed/
+    name: Stratechery
+    category: ai_ml
+    priority_boost: 1.5
+
+  - url: https://www.latent.space/feed
+    name: Latent Space
+    category: ai_ml
+    priority_boost: 1.5
+
+  - url: https://garymarcus.substack.com/feed
+    name: Gary Marcus
+    category: ai_ml
+    priority_boost: 1.0
+
+  - url: https://simonwillison.net/atom/everything/
+    name: Simon Willison
+    category: ai_ml
+    priority_boost: 1.5
+
+  - url: https://www.ben-evans.com/benedictevans/rss.xml
+    name: Benedict Evans
+    category: ai_ml
+    priority_boost: 1.0
+
+  - url: https://interconnected.org/home/feed
+    name: Matt Webb (Interconnected)
+    category: ai_ml
+
+  - url: https://every.to/feed.rss
+    name: Every.to
+    category: ai_ml
+
+  - url: https://nonint.com/feed/
+    name: Non-Trivial
+    category: ai_ml
+
+  - url: https://www.sequoiacap.com/feed/
+    name: Sequoia Capital
+    category: ai_ml
+
+  # Product & UX
+  - url: https://www.lennysnewsletter.com/feed
+    name: Lenny's Newsletter
+    category: product_ux
+    priority_boost: 1.5
+
+  - url: https://www.producttalk.org/feed/
+    name: Teresa Torres (Product Talk)
+    category: product_ux
+    priority_boost: 1.5
+
+  - url: https://www.reforge.com/blog/rss.xml
+    name: Reforge
+    category: product_ux
+    priority_boost: 1.0
+
+  - url: https://martinfowler.com/feed.atom
+    name: Martin Fowler
+    category: product_ux
+
+  - url: https://nngroup.com/feed/rss/
+    name: Nielsen Norman Group
+    category: product_ux
+    priority_boost: 1.0
+
+  # Cycling
+  - url: https://www.wielerflits.nl/feed/
+    name: Wielerflits
+    category: cycling
+    priority_boost: 1.5
+
+  - url: https://www.cyclingnews.com/rss/
+    name: CyclingNews
+    category: cycling
+    priority_boost: 1.5
+
+  - url: https://www.velonews.com/feed/
+    name: VeloNews
+    category: cycling
+    priority_boost: 1.0
+
+  - url: https://escapecollective.com/feed/
+    name: Escape Collective
+    category: cycling
+    priority_boost: 1.0
+
+  # Tech & Startups
+  - url: https://newsletter.pragmaticengineer.com/feed
+    name: The Pragmatic Engineer
+    category: tech_startups
+    priority_boost: 1.5
+
+  - url: https://blog.bytebytego.com/feed
+    name: ByteByteGo
+    category: tech_startups
+    priority_boost: 1.0
+
+  - url: https://www.theverge.com/rss/index.xml
+    name: The Verge
+    category: tech_startups
+    priority_boost: 1.0
+
+  - url: https://arstechnica.com/feed/
+    name: Ars Technica
+    category: tech_startups
+    priority_boost: 1.0
+
+  - url: https://feeds.feedburner.com/TechCrunch
+    name: TechCrunch
+    category: tech_startups
+
+  - url: https://stackoverflow.blog/feed/
+    name: Stack Overflow Blog
+    category: tech_startups
+
+  # Netherlands & Dutch Tech
+  - url: https://tweakers.net/feeds/mixed.xml
+    name: Tweakers
+    category: nl_news
+    priority_boost: 1.0
+
+  - url: https://feeds.nos.nl/nosnieuwstech
+    name: NOS Tech
+    category: nl_news
+    priority_boost: 1.0
+
+  - url: https://www.bitsoffreedom.nl/feed/
+    name: Bits of Freedom
+    category: nl_news
+    priority_boost: 1.5
+
+  - url: https://www.dutchcowboys.nl/rss.xml
+    name: Dutch Cowboys
+    category: nl_news
+
+  # Science
+  - url: https://www.nemokennislink.nl/rss/
+    name: NEMO Kennislink
+    category: science
+    priority_boost: 1.5
+
+  - url: https://www.scientificamerican.com/feed/
+    name: Scientific American
+    category: science
+    priority_boost: 1.0
+
+  - url: https://www.newscientist.com/feed/home/
+    name: New Scientist
+    category: science
+
+  # Climate
+  - url: https://www.carbonbrief.org/feed/
+    name: Carbon Brief
+    category: climate
+    priority_boost: 1.5
+
+  - url: https://insideclimatenews.org/feed/
+    name: Inside Climate News
+    category: climate
+    priority_boost: 1.0
