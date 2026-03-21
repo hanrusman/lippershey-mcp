@@ -3,23 +3,45 @@ services:
     build: .
     container_name: lippershey-mcp
     restart: unless-stopped
-    ports:
-      - "8420:8000"
-    volumes:
-      - lippershey-data:/data
-      - ./config.yaml:/app/config.yaml:ro
-    environment:
-      - LIPPERSHEY_DB=/data/lippershey.db
-      - LIPPERSHEY_CONFIG=/app/config.yaml
     read_only: true
-    tmpfs:
-      - /tmp
     security_opt:
       - no-new-privileges:true
     cap_drop:
       - ALL
-    mem_limit: 256m
-    cpus: 0.5
+    user: "1000:1000"
+    ports:
+      - "8420:8000"
+    tmpfs:
+      - /tmp:rw,noexec,nosuid
+    volumes:
+      - lippershey-data:/data:rw          # SQLite DB — needs writable volume (not tmpfs)
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - LIPPERSHEY_DB=/data/lippershey.db
+      - LIPPERSHEY_CONFIG=/app/config.yaml
+      - TZ=Europe/Amsterdam
+    networks:
+      - lippershey
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+          pids: 150
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   lippershey-data:
+
+networks:
+  lippershey:
