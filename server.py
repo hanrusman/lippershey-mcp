@@ -1,5 +1,6 @@
 import json
 import os
+from contextlib import asynccontextmanager
 from datetime import date, datetime, timezone
 
 import yaml
@@ -15,13 +16,15 @@ CONFIG_PATH = os.environ.get("LIPPERSHEY_CONFIG", "/app/config.yaml")
 with open(CONFIG_PATH) as f:
     CONFIG = yaml.safe_load(f)
 
-app = FastMCP("lippershey")
 
-
-@app.on_startup
-async def startup():
+@asynccontextmanager
+async def lifespan(server: FastMCP):
     await storage.init_db()
     await storage.seed_sources_from_config(CONFIG.get("feeds", []))
+    yield
+
+
+app = FastMCP("lippershey", lifespan=lifespan)
 
 
 @app.tool()
@@ -203,4 +206,4 @@ async def lippershey_add_source(
 
 
 if __name__ == "__main__":
-    app.run(transport="streamable-http", host="0.0.0.0", port=8000)
+    app.run(transport="sse")
