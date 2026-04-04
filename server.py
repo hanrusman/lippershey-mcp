@@ -206,4 +206,4 @@ async def lippershey_add_source(
 
 
 if __name__ == "__main__":
-    app.run(transport="sse")
+    app.run(transport="streamable-http")
