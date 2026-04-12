@@ -206,4 +206,7 @@ async def lippershey_add_source(
 
 
 if __name__ == "__main__":
-    app.run(transport="streamable-http")
+    import uvicorn
+
+    mcp_app = app.streamable_http_app()
+    uvicorn.run(mcp_app, host="0.0.0.0", port=8000)
