@@ -269,6 +269,25 @@ async def lippershey_fetch_article(url: str) -> str:
             return f"Error fetching article: {str(e)}"
 
 
+@app.tool()
+async def lippershey_save_krant(
+    date_str: str,
+    content_md: str,
+    content_json: str,
+    article_count: int,
+) -> str:
+    """Save a curated krant edition to the archive.
+
+    Args:
+        date_str: ISO date string.
+        content_md: The full Markdown content of the newspaper.
+        content_json: The JSON representation of the newspaper.
+        article_count: Number of articles included.
+    """
+    await storage.save_krant(date_str, content_md, content_json, article_count)
+    return f"Krant for {date_str} saved successfully with {article_count} articles."
+
+
 if __name__ == "__main__":
     import uvicorn
 
