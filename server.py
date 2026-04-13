@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from datetime import date, datetime, timezone
 
 import yaml
+import httpx
 from mcp.server.fastmcp import FastMCP
 
 import storage
@@ -11,6 +12,7 @@ import feeds as feeds_module
 import curator
 
 CONFIG_PATH = os.environ.get("LIPPERSHEY_CONFIG", "/app/config.yaml")
+TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY")
 
 # Load config
 with open(CONFIG_PATH) as f:
@@ -203,6 +205,68 @@ async def lippershey_add_source(
         return f"Invalid category '{category}'. Valid: {', '.join(sorted(valid_cats))}"
     await storage.add_source(url, name, category, priority_boost)
     return f"Source added: {name} ({category}) → {url}"
+
+
+@app.tool()
+async def lippershey_web_search(
+    query: str,
+    max_results: int = 10,
+) -> str:
+    """Perform a web search to find current articles and news.
+
+    Args:
+        query: The search query.
+        max_results: Number of results to return (default 10).
+    """
+    if not TAVILY_API_KEY:
+        return "Error: TAVILY_API_KEY environment variable not set."
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(
+                "https://api.tavily.com/search",
+                json={
+                    "api_key": TAVILY_API_KEY,
+                    "query": query,
+                    "search_depth": "advanced",
+                    "max_results": max_results,
+                },
+                timeout=30.0,
+            )
+            response.raise_for_status()
+            data = response.json()
+            results = data.get("results", [])
+
+            if not results:
+                return "No results found for this query."
+
+            lines = [f"Search results for '{query}':"]
+            for i, r in enumerate(results, 1):
+                lines.append(f"{i}. {r['title']}")
+                lines.append(f"   URL: {r['url']}")
+                lines.append(f"   Snippet: {r['content']}\n")
+            return "\n".join(lines)
+        except Exception as e:
+            return f"Search error: {str(e)}"
+
+
+@app.tool()
+async def lippershey_fetch_article(url: str) -> str:
+    """Fetch the full text of an article and return it as clean Markdown.
+
+    Args:
+        url: The URL of the article to fetch.
+    """
+    # Using Jina Reader for clean Markdown extraction
+    reader_url = f"https://r.jina.ai/{url}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(reader_url, timeout=30.0)
+            response.raise_for_status()
+            return response.text
+        except Exception as e:
+            return f"Error fetching article: {str(e)}"
 
 
 if __name__ == "__main__":
